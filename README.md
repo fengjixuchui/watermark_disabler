@@ -6,7 +6,7 @@ The function responsible for drawing whole desktop including the watermark is xx
 Both of the approaches used by this project were found while analyzing functions further down in the callstack.
 
 ### approach #1
-As you can see from the snippets below, forcing gpsi->unk874h to be zero the checks will fail and watermark won't be drawn.
+As you can see from the snippets below, forcing gpsi->unk874h to be zero the checks will fail and the watermark won't be drawn.
 ```cpp
 // global tagSERVERINFO* gpsi;
 // global _THREADINFO* gptiCurrent;
@@ -31,4 +31,4 @@ if ( should_draw_watermark )
 ### approach #2
 PaintWatermark calls GreExtTextOutWInternal (which is the internal function for ExtTextOutW/NtGdiExtTextOutW in wingdi.h). 
 
-The argument passed for size is a global called "gSafeModeStrLen", by setting the size to 0, the string won't be rendered. The pattern for the aforementioned global inside win32kfull is 44 8B C8 44 89 0D + 7
+The argument passed for size (c) is a global called "gSafeModeStrLen", by setting the size (c) to 0, the string won't be rendered. The pattern for the aforementioned global inside win32kfull is 44 8B C8 44 89 0D + 7
